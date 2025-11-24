@@ -4,9 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-// add the moduls to app.moduls
+// import the moduls to app.moduls
 import { HomeModule } from './home/home.module';
-import { Reservation } from './models/reservation';
+import { ReservationModule } from './reservation/reservation.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,10 @@ import { Reservation } from './models/reservation';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule  // add the RoutingModule 
+    AppRoutingModule,  
+    // add the moduls to app.moduls 
+    HomeModule,
+    ReservationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
