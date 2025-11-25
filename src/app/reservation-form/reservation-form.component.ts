@@ -13,7 +13,7 @@ export class ReservationFormComponent implements OnInit{
     // create an instance of FormGroup to collect our form data.
     reservationForm : FormGroup = new FormGroup({});
 
-    // Injecter FormBuilder dependency, to our componant.
+    // Injecter FormBuilder and ReservationService dependency, to our componant.
     constructor(private formBuilder: FormBuilder, private reservationService: ReservationService){
     }
 
