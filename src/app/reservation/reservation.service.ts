@@ -5,10 +5,17 @@ import { Reservation } from '../models/reservation';
   providedIn: 'root'
 })
 
+// Handling all the data service !
 export class ReservationService {
     reservations : Reservation[] = [];
 
+    constructor(){
+      let savedReservations = localStorage.getItem("reservations");
+      this.reservations = savedReservations? JSON.parse(savedReservations) : [];
+    }
+
     // CRUD
+
     getReservations(): Reservation[]{
       return this.reservations;
     }
@@ -19,10 +26,18 @@ export class ReservationService {
 
     addReservation(reservation: Reservation): void{
       this.reservations.push(reservation);
+      localStorage.setItem("reservations", JSON.stringify(this.reservations));
+    }
+
+    updateReservation(reservation: Reservation): void{
+        let index = this.reservations.findIndex(res => res.id === reservation.id);
+        this.reservations[index] = reservation;
+        localStorage.setItem("reservations", JSON.stringify(this.reservations));
     }
 
     deleteReservation(id: string): void{
       let index = this.reservations.findIndex(res => res.id === id);
       this.reservations.splice(index, 1);
+      localStorage.setItem("reservations", JSON.stringify(this.reservations));
     }
 }
