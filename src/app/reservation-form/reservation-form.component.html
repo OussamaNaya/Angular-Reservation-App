@@ -1,15 +1,15 @@
 <form [formGroup]="reservationForm" (ngSubmit)="Submit()">
     <div>
         <label for="">Check-In Date: </label>
-        <input type="date" formControlName="CheckInDate">
-        <div *ngIf="reservationForm.get('CheckInDate')?.invalid && reservationForm.get('CheckInDate')?.touched">
+        <input type="date" formControlName="checkInDate">
+        <div *ngIf="reservationForm.get('checkInDate')?.invalid && reservationForm.get('checkInDate')?.touched">
             Check-In Date is required !
         </div>
     </div>      
     <div>
         <label for="">Check-Out Date: </label>
-        <input type="date" formControlName="CheckOutDate">
-        <div *ngIf="reservationForm.get('CheckOutDate')?.invalid && reservationForm.get('CheckOutDate')?.touched">
+        <input type="date" formControlName="checkOutDate">
+        <div *ngIf="reservationForm.get('checkOutDate')?.invalid && reservationForm.get('checkOutDate')?.touched">
             Check-Out Date is required !
         </div>
     </div>
