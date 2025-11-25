@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReservationService } from '../reservation/reservation.service';
 import { Reservation } from '../models/reservation';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reservation-form',
@@ -13,8 +14,12 @@ export class ReservationFormComponent implements OnInit{
     // create an instance of FormGroup to collect our form data.
     reservationForm : FormGroup = new FormGroup({});
 
-    // Injecter FormBuilder and ReservationService dependency, to our componant.
-    constructor(private formBuilder: FormBuilder, private reservationService: ReservationService){
+    // Injecter FormBuilder, ReservationService and th Router dependency, to our componant.
+    constructor(
+      private formBuilder: FormBuilder, 
+      private reservationService: ReservationService,
+      private router : Router
+    ){
     }
 
     // add the validator to reservationForm object.
@@ -33,6 +38,7 @@ export class ReservationFormComponent implements OnInit{
       {
           let newReservation : Reservation = this.reservationForm.value;
           this.reservationService.addReservation(newReservation);
+          this.router.navigate(['/list'])
       }
     }
 }
