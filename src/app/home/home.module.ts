@@ -14,6 +14,11 @@ import { RouterLink } from '@angular/router';
     CommonModule,
     AppRoutingModule,
     RouterLink
-]
+  ],
+  // add the tag exports for us the Home componant at other componants.
+  exports: [
+    HomeComponent
+  ]
 })
+
 export class HomeModule { }
