@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReservationService } from '../reservation/reservation.service';
 import { Reservation } from '../models/reservation';
-import { Route, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-reservation-form',
@@ -18,12 +18,14 @@ export class ReservationFormComponent implements OnInit{
     constructor(
       private formBuilder: FormBuilder, 
       private reservationService: ReservationService,
-      private router : Router
+      private router : Router,
+      private activatedRoute: ActivatedRoute
     ){
     }
 
     // add the validator to reservationForm object.
     ngOnInit(): void {
+      // crete the groupe filter before read the data from the formular.
       this.reservationForm = this.formBuilder.group({
           checkInDate: ['', Validators.required],
           checkOutDate: ['', Validators.required],
@@ -31,13 +33,34 @@ export class ReservationFormComponent implements OnInit{
           guestEmail: ['', [Validators.required, Validators.email]],
           roomNumber: ['', Validators.required],
       });
+
+      // check the id if existe
+      let id = this.activatedRoute.snapshot.paramMap.get("id");
+      if(id){
+        let reservation = this.reservationService.getReservation(id);
+        if(reservation){
+            // Patch the values of reservation into the form.
+            this.reservationForm.patchValue(reservation)
+        }
+      }
     }
 
     Submit(){
       if(this.reservationForm.valid)
       {
+          // get the reservation from the formular.
           let newReservation : Reservation = this.reservationForm.value;
-          this.reservationService.addReservation(newReservation);
+
+          // check the id if existe
+          let id = this.activatedRoute.snapshot.paramMap.get("id");
+          if(id){
+              // Edit
+              this.reservationService.updateReservation(id, newReservation);
+          }else{
+              // Create
+              this.reservationService.addReservation(newReservation);
+          }
+
           this.router.navigate(['/list'])
       }
     }
